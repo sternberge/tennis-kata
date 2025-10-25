@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class TennisGameService {
     public List<String> computeGameScores(String score) {
 
-        validateSequence(score);
+        validateScore(score);
 
         List<String> outputs = new ArrayList<>();
         TennisGame game = new TennisGame();
@@ -31,7 +31,7 @@ public class TennisGameService {
         return outputs;
     }
 
-    private void validateSequence(String sequence) {
+    private void validateScore(String sequence) {
         if (sequence == null) {
             throw new InvalidScoreException("Les scores ne peuvent pas être null.");
         }
