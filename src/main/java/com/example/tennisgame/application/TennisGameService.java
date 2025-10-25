@@ -5,6 +5,7 @@ import com.example.tennisgame.domain.exception.InvalidScoreException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class TennisGameService {
     public List<String> computeGameScores(String score) {
@@ -37,11 +38,12 @@ public class TennisGameService {
         if (sequence.isEmpty()) {
             throw new InvalidScoreException("Les scores ne peuvent pas être vide.");
         }
-        for (int i = 0; i < sequence.length(); i++) {
-            char c = sequence.charAt(i);
-            if (c != 'A' && c != 'B') {
-                throw new InvalidScoreException(c, i);
-            }
-        }
+
+        IntStream.range(0, sequence.length())
+                .filter(i -> sequence.charAt(i) != 'A' && sequence.charAt(i) != 'B')
+                .findFirst()
+                .ifPresent(i -> {
+                    throw new InvalidScoreException(sequence.charAt(i), i);
+                });
     }
 }
